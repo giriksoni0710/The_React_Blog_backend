@@ -7,20 +7,27 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 
+// here we store the upvotes and comment data of the article
 
-const articlesinfo = {
+var articlesinfo = {
 
     'learn-react': {
-      upvotes:  0
+      upvotes:  0,
+      comments: []
     },
     'learn-node': {
-        upvotes:  0
+        upvotes:  0,
+        comments: []
+   
     },
     'my-thoughts-on-resumes': {
-        upvotes:  0
-    }
+        upvotes:  0,
+        comments: []
+        }
 
 }
+
+//increase upvote everytime the request is made
 
 app.post('/articles/:name/upvote', (req, res)=>{
 
@@ -35,7 +42,7 @@ app.post('/articles/:name/upvote', (req, res)=>{
 
 })
 
-
+//adding a comment from the comment 
 app.post('/articles/:name/addcomment', (req, res)=>{
 
 
@@ -45,9 +52,20 @@ app.post('/articles/:name/addcomment', (req, res)=>{
     const email = req.body.email;
     const comment = req.body.comment;
 
+    
+    
+    articlesinfo[article_name].comments.push({username, comment, email});
+
+    console.log(articlesinfo[article_name].comments[0]);
+
+    if(articlesinfo[article_name].comments!=null){
+    
+        res.send(articlesinfo[article_name]);
+
+    }
 
     
-    console.log(username);
+   
     
 
 })
